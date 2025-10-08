@@ -75,7 +75,7 @@ body {
     text-decoration: none;
     color: var(--color-texto-secundario);
 }
-:hover .navbar a{
+ .navbar a:hover{
     color: var(--color-texto-resalte);
 }
 .logo {
@@ -125,3 +125,50 @@ body {
     border-radius: 10px;
 
 }
+
+/*contacto.html */
+
+.contacto--main{
+    width: 100%;
+   
+}
+.seccion-contacto {
+    width: 80%;
+    margin: auto;
+    font-size: 2rem;
+}
+
+.seccion-contacto h2{
+    font-size: 3rem;
+
+}
+.form {
+    width: 100%;
+    background-color: var(--color-fondo-secundario);
+    color: var(--color-texto-secundario);
+    border-radius: 10px;
+    padding: 20px;
+}
+.campo-form {
+    margin: 10px;
+    width: 100%;
+
+}
+.campo-form input{
+    width: 80%;
+    height: 2rem;
+}
+.campo-fomr textarea{
+    width: 80%;
+    height: 2 rem; 
+}
+.seccion-contacto button {
+    background-color: var(--color-fondo-resalte);
+    color: var(--color-texto-resalte);
+    border-radius: 5px;
+    font-size: 2rem;
+    padding: 0 10px;
+
+}
+
+
