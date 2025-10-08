@@ -1,0 +1,127 @@
+/*Fuentes*/
+
+@import url('https://fonts.googleapis.com/css2?family=Farsan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cookie&display=swap');
+
+/* Paleta de colores */
+:root{
+    --color-texto-primario: #0C172F;
+    --color-fondo-primario: #FCFCA4;
+
+    --color-texto-resalte: #FCFCA4 ;
+    --color-fondo-resalte: #6D3263;
+
+    --color-texto-secundario:#FFA793;
+    --color-fondo-secundario: #0C172F;
+    
+
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Farsan", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 150px 1fr 60px;
+    margin: 20px;
+    row-gap: 20px;
+    background-color: var(--color-fondo-primario);
+    color: var(--color-texto-primario);
+    width: 90%;
+    min-width: 600px;
+    margin: auto;
+    
+
+}
+
+
+.header {
+    background-color: var(--color-fondo-resalte);
+    color: var(--color-texto-resalte);
+    display: grid;
+    padding: 20px;
+    height: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100%;
+    justify-content: space-between; 
+    align-items: center;
+    border-radius: 20px;
+}
+
+.header h1 {
+    font-size: 3rem;
+}
+
+.navbar ul {
+    background-color: var(--color-fondo-secundario);
+    color: var(--color-texto-secundario);
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    border-radius: 10px;
+    list-style: none;
+    font-size: 1.5rem;
+    height: 3rem;
+    width: 100%;
+}
+.navbar a{
+    text-decoration: none;
+    color: var(--color-texto-secundario);
+}
+:hover .navbar a{
+    color: var(--color-texto-resalte);
+}
+.logo {
+    height: 100%;
+}
+
+.main {
+    width: 100%;
+
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.home h2{
+    font-size: 3rem;
+}
+.home p{
+    font-size: 2rem;
+}
+
+
+.productos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 300px;
+    width: 100%;
+    gap: 16px;
+
+
+}
+.productos--tarjeta {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+
+}
+
+.productos--tarjeta img {
+    height: 80%;
+    object-fit: cover;  
+    object-position: center; 
+    border-radius: 10px;
+
+}
