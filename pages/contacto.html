@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/style.css" />
-    <title>Vainilla helados - Contacto</title>
-  </head>
-  <body>
-     <header class="header">
-        <img class="logo" src="../assets/images/logo.png" alt="Logo de tienda">
-        <h1>Vainilla Helados</h1>
-        <nav class="navbar">
-            <ul>
-                <li><a href="../index.html">Inicio</a></li>
-                <li><a href="../index.html#venta">Productos</a></li>
-                <li><a href="./contacto.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main class="contacto--main">
-      <section class="seccion-contacto">
-        <h2>Contacto</h2>
-        <form
-          class="form"
-          action="https://formspree.io/f/mldpwobz"
-          method="POST"
-        >
-          <div class="campo-form">
-            <label for="email"> Correo:</label>
-            <input id="email" type="email" name="email" />
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <title>Vainilla helados - Contacto</title>
+</head>
 
-          <div class="campo-form">
-            <label for="mensaje"> Mensaje:</label>
-            <textarea id="mensaje" name="message"></textarea>
-          </div>
+<body>
+  <header class="header">
+    <img class="logo" src="../assets/images/logo.png" alt="Logo de tienda">
+    <h1>Vainilla Helados</h1>
+  
+    <nav class="menu">
+      <ul>
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../index.html#venta">Productos</a></li>
+        <li><a href="./contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
 
-          
-          <input type="hidden" name="subject" value="Contacto desde el sitio" />
+  <main class="contacto--main">
+    <section class="seccion-contacto">
+      <h2>Contacto</h2>
+      <form class="form" action="https://formspree.io/f/mldpwobz" method="POST">
+        <div class="campo-form">
+          <label for="email"> Correo:</label>
+          <input id="email" type="email" name="email" />
+        </div>
 
-          <button type="submit">Send</button>
-        </form>
-      </section>
-    </main>
+        <div class="campo-form">
+          <label for="mensaje"> Mensaje:</label>
+          <textarea id="mensaje" name="message"></textarea>
+        </div>
 
-    <footer class="footer">
-        <h3>Talento Tech</h3>
-        <p>Federico C. Alonso federico80374@gmail.com</p>
-    </footer>
-  </body>
+
+        <input type="hidden" name="subject" value="Contacto desde el sitio" />
+
+        <button type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <h3>Talento Tech</h3>
+    <p>Federico C. Alonso federico80374@gmail.com</p>
+  </footer>
+</body>
+
 </html>

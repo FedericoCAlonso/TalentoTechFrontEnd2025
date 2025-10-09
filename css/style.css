@@ -2,23 +2,24 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Farsan&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cookie&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Emoji:wght@300..700&display=swap');
 
 /* Paleta de colores */
-:root{
-    --color-texto-primario: #0C172F;
-    --color-fondo-primario: #FCFCA4;
+:root {
+    --color-texto-primario: #2E2E2E;
+    --color-fondo-primario: #F8F7F3;
 
-    --color-texto-resalte: #FCFCA4 ;
-    --color-fondo-resalte: #6D3263;
+    --color-texto-resalte: #FFFFFF;
+    --color-fondo-resalte: #7ACFD6;
 
-    --color-texto-secundario:#FFA793;
-    --color-fondo-secundario: #0C172F;
-    
+    --color-texto-secundario: #555555;
+    --color-fondo-secundario: #EDE6DD;
+
 
 }
 
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -37,7 +38,7 @@ body {
     width: 90%;
     min-width: 600px;
     margin: auto;
-    
+
 
 }
 
@@ -50,20 +51,29 @@ body {
     height: 100%;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 100%;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     border-radius: 20px;
 }
 
-.header h1 {
+h1 {
     font-size: 3rem;
 }
 
-.navbar ul {
+h2 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+.menu ul {
     background-color: var(--color-fondo-secundario);
     color: var(--color-texto-secundario);
     display: flex;
-    justify-content:space-around;
+    justify-content: space-around;
     align-items: center;
     border-radius: 10px;
     list-style: none;
@@ -71,13 +81,17 @@ body {
     height: 3rem;
     width: 100%;
 }
-.navbar a{
+
+.menu a {
     text-decoration: none;
     color: var(--color-texto-secundario);
 }
- .navbar a:hover{
+
+.menu a:hover {
     color: var(--color-texto-resalte);
 }
+
+
 .logo {
     height: 100%;
 }
@@ -93,12 +107,9 @@ body {
     justify-content: center;
     align-items: center;
 }
-.home h2{
-    font-size: 3rem;
-}
-.home p{
-    font-size: 2rem;
-}
+
+
+
 
 
 .productos {
@@ -110,38 +121,37 @@ body {
 
 
 }
+
 .productos--tarjeta {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    width: 100%;
+    width: 90%;
 
 }
 
 .productos--tarjeta img {
     height: 80%;
-    object-fit: cover;  
-    object-position: center; 
+    object-fit: cover;
+    object-position: center;
     border-radius: 10px;
 
 }
 
 /*contacto.html */
 
-.contacto--main{
+.contacto--main {
     width: 100%;
-   
+
 }
+
 .seccion-contacto {
     width: 80%;
     margin: auto;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
-.seccion-contacto h2{
-    font-size: 3rem;
 
-}
 .form {
     width: 100%;
     background-color: var(--color-fondo-secundario);
@@ -149,19 +159,23 @@ body {
     border-radius: 10px;
     padding: 20px;
 }
+
 .campo-form {
     margin: 10px;
     width: 100%;
 
 }
-.campo-form input{
+
+.campo-form input {
     width: 80%;
-    height: 2rem;
+    height: 1.5rem;
 }
-.campo-fomr textarea{
+
+.campo-fomr textarea {
     width: 80%;
-    height: 2 rem; 
+    height: 1.5 rem;
 }
+
 .seccion-contacto button {
     background-color: var(--color-fondo-resalte);
     color: var(--color-texto-resalte);
@@ -172,3 +186,41 @@ body {
 }
 
 
+@media (max-width: 768px) {
+    .productos {
+        grid-template-columns: 1;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .menu a {
+        font-size: 0;
+        position: relative;
+        
+    }
+
+    .menu li:nth-child(1) a::before {
+        content: "🏠";
+    }
+
+    .menu li:nth-child(2) a::before {
+        content: "🍦";
+    }
+
+    .menu li:nth-child(3) a::before {
+        content: "📞";
+    }
+
+    .menu a::before {
+        font-family: "Noto Emoji", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 24px;
+        display: inline-block;
+        vertical-align: middle;
+        color: var(--color-texto-resalte);
+    }
+ 
+
+}
