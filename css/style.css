@@ -133,9 +133,11 @@ p {
 
 .productos--tarjeta img {
     height: 80%;
+    width: 100%;
     object-fit: cover;
     object-position: center;
     border-radius: 10px;
+    margin: 0 auto;
 
 }
 
@@ -217,7 +219,7 @@ p {
         font-optical-sizing: auto;
         font-weight: 400;
         font-style: normal;
-        font-size: 24px;
+        font-size: 2rem;
         display: inline-block;
         vertical-align: middle;
         color: var(--color-texto-resalte);
