@@ -19,16 +19,24 @@ const MENSAJES_ERROR = {
         ERROR_DESCRIPCION: `Error, es obligatorio el ingreso de la descripción.`,
         ERROR_TIPO_DESCRIPCION: `Error, la descripciòn debe ser del tipo "string"`,
         ERROR_STOCK: `Error, el stock debe estar entre ${VALIDACION.STOCK_MINIMO} y ${VALIDACION.STOCK_MAXIMO}`,
-        ERROR_TIPO_STOCK:  `Error, el stock debe ser del tipo "number"`
+        ERROR_TIPO_STOCK:  `Error, el stock debe ser del tipo "number"`,
+        ERROR_CODIGO: `Error, código null`,
+        ERROR_CONSTRUCTOR: `Error, constructor de uso interno, no puede ser llamado de afuera de la clase`
 };
-
-const ConfigProducto = Object.freeze({
+/** hago que no se pueda modificar */
+export const ConfigProducto = Object.freeze({
     VALIDACION,
     MENSAJES_ERROR
     
 });
 
 export class Producto {
+    static #construyeLaFabrica = false;
+    #nombre;
+    #descripcion;
+    #precio;
+    #stock;
+    #codigo;
     constructor(
         nombre, 
         descripcion, 
@@ -36,11 +44,15 @@ export class Producto {
         stock, 
         codigo
     ) {
-        this._nombre = nombre;
-        this._descripcion = descripcion;
-        this._precio = precio;
-        this._stock = stock;
-        this._codigo = codigo;
+        if(! Producto.#construyeLaFabrica){
+            throw new TypeError(ConfigProducto.MENSAJES_ERROR.ERROR_CONSTRUCTOR);
+        }
+        Producto.#construyeLaFabrica=false;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.stock = stock;
+        this.codigo = codigo;
     }
     /**
      * 
@@ -57,7 +69,7 @@ export class Producto {
         ){
             throw new RangeError(ConfigProducto.MENSAJES_ERROR.ERROR_NOMBRE);
         };
-        this._nombre = nuevoNombre;
+        this.#nombre = nuevoNombre.trim();
     }
     set descripcion(nuevaDescripcion){
         if (typeof nuevaDescripcion !== 'string') {
@@ -69,35 +81,95 @@ export class Producto {
         ){
             throw new RangeError(ConfigProducto.MENSAJES_ERROR.ERROR_DESCRIPCION);
         };
-        this._nombre = nuevaDescripcion;
+        this.#descripcion = nuevaDescripcion.trim();
     }
     set precio(nuevoPrecio){
         if( typeof nuevoPrecio !== 'number') {
             throw new TypeError(ConfigProducto.MENSAJES_ERROR.ERROR_TIPO_PRECIO);
         };
         if( nuevoPrecio < ConfigProducto.VALIDACION.PRECIO_MINIMO) {
-            throw new TypeError(ConfigProducto.MENSAJES_ERROR.ERROR_PRECIO);
+            throw new RangeError(ConfigProducto.MENSAJES_ERROR.ERROR_PRECIO);
         };
-        this._precio = nuevoPrecio;
+        this.#precio = nuevoPrecio;
  
     }
     set stock(nuevoStock){
-        if( typeof nuevoStock !== 'number'){
+        if( isNaN(nuevoStock)){
             throw new TypeError(ConfigProducto.MENSAJES_ERROR.ERROR_TIPO_STOCK);
         }
         if( 
             nuevoStock < ConfigProducto.VALIDACION.STOCK_MINIMO ||
             nuevoStock > ConfigProducto.VALIDACION.STOCK_MAXIMO
         ){
-            throw new TypeError(ConfigProducto.ERROR_STOCK)
+            throw new RangeError(ConfigProducto.MENSAJES_ERROR.ERROR_STOCK);
+        }
+        this.#stock = nuevoStock;
+    }
+    set codigo(nuevoCodigo){
+        if( !nuevoCodigo){
+            throw new TypeError(ConfigProducto.MENSAJES_ERROR.ERROR_CODIGO);
+        }
+        this.#codigo = nuevoCodigo;
+    }
+
+    /** Getters    */
+
+    get nombre(){
+        return this.#nombre;
+    }
+    get descripcion(){
+        return this.#descripcion;
+    }
+    get precio(){
+        return this.#precio;
+    }
+    get stock(){
+        return this.#stock;
+    }
+    get codigo(){
+        return this.#codigo;
+    }
+    /**
+     *  Funcionalidades
+     */
+    toJson(){
+        return JSON.stringify({
+            nombre: this.#nombre,
+            descripcion: this.#descripcion,
+            precio: this.#precio,
+            stock: this.#stock,
+            codigo: this.#codigo
+        });
+    }
+/**
+ * 
+ * para darle más flexibilidad, si suma con otro número, suma el precio, si hay operaciones entre strings, devuelve el json en string
+ */
+    [Symbol.toPrimitive](hint){
+        switch(hint){
+            case 'number':
+                return this.#precio;
+            case 'string':
+                return this.toJson();
+            case 'default':
+                return this.#precio;
+            default:
+                break;
         }
     }
-    set codigo
+
+/**
+ * 
+ * @param {object} datosJson : es un objeto de JS con los atributos nombre, descripción, precio, stock, código
+ * @returns 
+ */
 
     static crearProductoDesdeJson(datosJson) {
         const { nombre, descripcion, precio, stock, codigo } = JSON.parse(datosJson);
-        
+        Producto.#construyeLaFabrica = true; /* habilito el uso del constructor */
+        return new Producto(nombre, descripcion, parseFloat(precio), parseInt(stock), codigo);
 
     }
+    
 }
 
