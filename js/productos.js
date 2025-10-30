@@ -1,4 +1,5 @@
 /**
+ * Archivo productos.js
  * Archivo de definición de la clase Productos
  * 
  */
@@ -30,8 +31,11 @@ export const ConfigProducto = Object.freeze({
     
 });
 
+/* protejo al constructor para que no se pueda instanciar diréctamente con new. Solo por el factory */
+const _token =  Symbol('claveDeConstructor');
+
 export class Producto {
-    static #construyeLaFabrica = false;
+
     #nombre;
     #descripcion;
     #precio;
@@ -42,12 +46,12 @@ export class Producto {
         descripcion, 
         precio, 
         stock, 
-        codigo
+        codigo,
+        llave
     ) {
-        if(! Producto.#construyeLaFabrica){
+        if(llave !== _token){
             throw new TypeError(ConfigProducto.MENSAJES_ERROR.ERROR_CONSTRUCTOR);
         }
-        Producto.#construyeLaFabrica=false;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -141,6 +145,9 @@ export class Producto {
             codigo: this.#codigo
         });
     }
+    toString(){
+        return this.toJson();
+    }
 /**
  * 
  * para darle más flexibilidad, si suma con otro número, suma el precio, si hay operaciones entre strings, devuelve el json en string
@@ -150,7 +157,7 @@ export class Producto {
             case 'number':
                 return this.#precio;
             case 'string':
-                return this.toJson();
+                return this.toString();
             case 'default':
                 return this.#precio;
             default:
@@ -160,14 +167,14 @@ export class Producto {
 
 /**
  * 
- * @param {object} datosJson : es un objeto de JS con los atributos nombre, descripción, precio, stock, código
+ * @param {object} datosJson : es un string de JS con los atributos nombre, descripción, precio, stock, código
  * @returns 
  */
 
     static crearProductoDesdeJson(datosJson) {
-        const { nombre, descripcion, precio, stock, codigo } = JSON.parse(datosJson);
-        Producto.#construyeLaFabrica = true; /* habilito el uso del constructor */
-        return new Producto(nombre, descripcion, parseFloat(precio), parseInt(stock), codigo);
+        const { nombre, descripcion, precio, stock, codigo, } = JSON.parse(datosJson);
+         /* habilito el uso del constructor */
+        return new Producto(nombre, descripcion, parseFloat(precio), parseInt(stock), codigo, _token );
 
     }
     
