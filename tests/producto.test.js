@@ -26,7 +26,7 @@ describe('Clase Producto', () => {
     });
 
     it('lanza error si el nombre es muy corto', () => {
-        const badJson = JSON.stringify({ nombre: 'aa', descripcion: 'desc', precio: 1, stock: 0, codigo: 'C' });
+        const badJson = JSON.stringify({ nombre: 'a', descripcion: 'desc', precio: 1, stock: 0, codigo: 'C' });
         expect(() => Producto.crearProductoDesdeJson(badJson)).toThrow(RangeError);
     });
 
