@@ -112,11 +112,16 @@ p {
 
 
 
-
 .productos {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 300px;
+
+    /* Centrar horizontalmente cada grid item; no estirar verticalmente aquí
+       porque necesitamos que las tarjetas ocupen la altura de la fila para
+       que las imágenes con object-fit: cover funcionen correctamente. */
+    justify-items: center; /* centra horizontalmente cada grid item */
+    align-items: stretch;  /* mantener stretch para que las tarjetas llenen la fila */
     width: 100%;
     gap: 16px;
 
@@ -128,11 +133,14 @@ p {
     flex-direction: column;
     overflow: hidden;
     width: 90%;
+    /* Asegurar que la tarjeta ocupa toda la altura de la celda del grid
+       así las imágenes con porcentajes de altura se calculan correctamente */
+    height: 100%;
 
 }
 
 .productos--tarjeta img {
-    height: 80%;
+    height: 100%; /* ocupar toda la tarjeta para que object-fit: cover recorte */
     width: 100%;
     object-fit: cover;
     object-position: center;

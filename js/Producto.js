@@ -38,12 +38,14 @@ export class Producto {
 
     #nombre;
     #descripcion;
+    #urlFoto;
     #precio;
     #stock;
     #codigo;
     constructor(
         nombre, 
-        descripcion, 
+        descripcion,
+        urlFoto, 
         precio, 
         stock, 
         codigo,
@@ -54,6 +56,7 @@ export class Producto {
         }
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.urlFoto = urlFoto;
         this.precio = precio;
         this.stock = stock;
         this.codigo = codigo;
@@ -87,6 +90,9 @@ export class Producto {
         };
         this.#descripcion = nuevaDescripcion.trim();
     }
+    set urlFoto(nuevaUrlFoto){
+        this.#urlFoto = nuevaUrlFoto;
+    }   
     set precio(nuevoPrecio){
         if( typeof nuevoPrecio !== 'number') {
             throw new TypeError(ConfigProducto.MENSAJES_ERROR.ERROR_TIPO_PRECIO);
@@ -124,6 +130,9 @@ export class Producto {
     get descripcion(){
         return this.#descripcion;
     }
+    get urlFoto(){
+        return this.#urlFoto;
+    }   
     get precio(){
         return this.#precio;
     }
@@ -140,6 +149,7 @@ export class Producto {
         return JSON.stringify({
             nombre: this.#nombre,
             descripcion: this.#descripcion,
+            urlFoto: this.#urlFoto,
             precio: this.#precio,
             stock: this.#stock,
             codigo: this.#codigo
@@ -167,14 +177,14 @@ export class Producto {
 
 /**
  * 
- * @param {object} datosJson : es un string de JS con los atributos nombre, descripción, precio, stock, código
+ * @param {object} datosJson : es un objeto JS con los atributos nombre, descripción, precio, stock, código
  * @returns 
  */
 
     static crearProductoDesdeJson(datosJson) {
-        const { nombre, descripcion, precio, stock, codigo, } = JSON.parse(datosJson);
+        const { nombre, descripcion,urlFoto, precio, stock, codigo, } = datosJson;
          /* habilito el uso del constructor */
-        return new Producto(nombre, descripcion, parseFloat(precio), parseInt(stock), codigo, _token );
+        return new Producto(nombre, descripcion, urlFoto, parseFloat(precio), parseInt(stock), codigo, _token );
 
     }
     
