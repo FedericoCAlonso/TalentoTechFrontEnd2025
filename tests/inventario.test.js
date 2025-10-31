@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { Producto } from '../js/productos.js';
-import { Inventario } from '../js/inventario.js';
+import { Producto } from '../js/Producto.js';
+import { Inventario } from '../js/Inventario.js';
 
 describe('Clase Inventario e integración con Producto', () => {
     it('constructor lanza si no recibe clase con crearProductoDesdeJson', () => {
