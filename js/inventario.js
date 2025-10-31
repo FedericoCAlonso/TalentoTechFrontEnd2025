@@ -1,5 +1,5 @@
 /**
- * Archivo: inventario.js
+ * Archivo: Inventario.js
  * La idea de esta clase inventario es que quede separada de la definción de la clase producto.
  * En este caso, lo hago solo para practicar la inyección de dependencias en JS, cosa que 
  * es necesario hacer cuando uno programa profesionalmente. 
