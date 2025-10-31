@@ -120,8 +120,10 @@ p {
     /* Centrar horizontalmente cada grid item; no estirar verticalmente aquí
        porque necesitamos que las tarjetas ocupen la altura de la fila para
        que las imágenes con object-fit: cover funcionen correctamente. */
-    justify-items: center; /* centra horizontalmente cada grid item */
-    align-items: stretch;  /* mantener stretch para que las tarjetas llenen la fila */
+    justify-items: center;
+    /* centra horizontalmente cada grid item */
+    align-items: stretch;
+    /* mantener stretch para que las tarjetas llenen la fila */
     width: 100%;
     gap: 16px;
 
@@ -140,7 +142,8 @@ p {
 }
 
 .productos--tarjeta img {
-    height: 100%; /* ocupar toda la tarjeta para que object-fit: cover recorte */
+    height: 100%;
+    /* ocupar toda la tarjeta para que object-fit: cover recorte */
     width: 100%;
     object-fit: cover;
     object-position: center;
@@ -198,6 +201,31 @@ p {
 
 
 @media (max-width: 768px) {
+
+    body {
+        grid-template-rows: 100px 1fr 60px;
+        margin: 0;
+        row-gap: 10px;
+        width: 100%;
+        min-width: 360px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+        text-align: center;
+    }
+    h3 {
+        font-size: 0.9rem;
+    }
+
+    p {
+        font-size: 0.7rem;
+    }
+
     .productos {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -207,7 +235,7 @@ p {
     .menu a {
         font-size: 0;
         /*position: relative;*/
-        
+
     }
 
     .menu li:nth-child(1) a::before {
@@ -227,11 +255,10 @@ p {
         font-optical-sizing: auto;
         font-weight: 400;
         font-style: normal;
-        font-size: 2rem;
+        font-size: 1.5rem;
         display: inline-block;
-        vertical-align: middle;
         color: var(--color-texto-resalte);
     }
- 
+
 
 }
