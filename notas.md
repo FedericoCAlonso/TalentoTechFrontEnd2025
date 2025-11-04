@@ -11,13 +11,13 @@ El DOM es una interfaz de programación que representa la estructura de un docum
 
 ### Conceptos Clave
 
-| Concepto | Descripción |
-|----------|-------------|
-| **Estructura de Árbol** | Organiza elementos HTML en una jerarquía de nodos (documento, elementos, texto, atributos) |
-| **Selección de Elementos** | `getElementById()`, `querySelector()` (primer match), `querySelectorAll()` (todos los matches) |
-| **Manipulación de Contenido** | `textContent` (solo texto), `innerHTML` (incluye HTML) |
-| **Manipulación de Atributos** | `setAttribute()`, `classList.add()`, `style.property` |
-| **Creación de Elementos** | `createElement()`, `appendChild()` |
+| Concepto                      | Descripción                                                                                    |
+| ----------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Estructura de Árbol**       | Organiza elementos HTML en una jerarquía de nodos (documento, elementos, texto, atributos)     |
+| **Selección de Elementos**    | `getElementById()`, `querySelector()` (primer match), `querySelectorAll()` (todos los matches) |
+| **Manipulación de Contenido** | `textContent` (solo texto), `innerHTML` (incluye HTML)                                         |
+| **Manipulación de Atributos** | `setAttribute()`, `classList.add()`, `style.property`                                          |
+| **Creación de Elementos**     | `createElement()`, `appendChild()`                                                             |
 
 ---
 
@@ -28,13 +28,13 @@ Acciones o sucesos que ocurren en el navegador (clics, teclas presionadas, carga
 
 ### Elementos Principales
 
-| Concepto | Explicación |
-|----------|-------------|
-| **Event Listener** | `elemento.addEventListener('tipoEvento', funcionCallback)` |
-| **Objeto Evento (e)** | Información detallada del evento. Propiedad clave: `e.target` (elemento origen) |
-| **Control de Flujo** | `e.preventDefault()` (detiene acción predeterminada), `e.stopPropagation()` (detiene propagación) |
-| **Bubbling** | El evento "burbujea" desde el elemento interno hacia arriba |
-| **Capturing** | El evento viaja desde la raíz hacia el elemento objetivo |
+| Concepto              | Explicación                                                                                       |
+| --------------------- | ------------------------------------------------------------------------------------------------- |
+| **Event Listener**    | `elemento.addEventListener('tipoEvento', funcionCallback)`                                        |
+| **Objeto Evento (e)** | Información detallada del evento. Propiedad clave: `e.target` (elemento origen)                   |
+| **Control de Flujo**  | `e.preventDefault()` (detiene acción predeterminada), `e.stopPropagation()` (detiene propagación) |
+| **Bubbling**          | El evento "burbujea" desde el elemento interno hacia arriba                                       |
+| **Capturing**         | El evento viaja desde la raíz hacia el elemento objetivo                                          |
 
 ---
 
@@ -190,11 +190,11 @@ if (!(producto instanceof Producto)) {
 
 ### Tipos de Errores
 
-| Error | Uso |
-|-------|-----|
-| `TypeError` | Tipo de dato incorrecto |
+| Error        | Uso                            |
+| ------------ | ------------------------------ |
+| `TypeError`  | Tipo de dato incorrecto        |
 | `RangeError` | Valor fuera de rango aceptable |
-| `Error` | Errores generales |
+| `Error`      | Errores generales              |
 
 ---
 
@@ -304,12 +304,12 @@ inventario.agregarProducto(producto1);
 
 **¿Cuándo usar métodos estáticos de fábrica en lugar del constructor?**
 
-| Escenario | Solución |
-|-----------|----------|
-| Datos simples | Constructor directo: `new Producto(...)` |
-| Validación compleja | Método estático: `Producto.crearDesdeJSON(...)` |
-| Fuentes externas (API, JSON) | Método estático de fábrica |
-| Decisión de subclases | Abstract Factory Pattern |
+| Escenario                    | Solución                                        |
+| ---------------------------- | ----------------------------------------------- |
+| Datos simples                | Constructor directo: `new Producto(...)`        |
+| Validación compleja          | Método estático: `Producto.crearDesdeJSON(...)` |
+| Fuentes externas (API, JSON) | Método estático de fábrica                      |
+| Decisión de subclases        | Abstract Factory Pattern                        |
 
 **Ventajas de las fábricas:**
 - Centralizan la lógica de creación
@@ -368,3 +368,88 @@ Este flujo muestra cómo todos los conceptos se integran en una aplicación prá
 4. **index.html** → Estructura de la página con `<script type="module">`
 
 Esta arquitectura modular permite escalar la aplicación, mantener código limpio y aplicar principios sólidos de POO en JavaScript vanilla.
+
+
+## Local Storage vs SessionStorage
+
+### Primera definición
+
+* SessionStorage:
+
+    1. Almacena datos de forma temporal, hasta que se cierre la ventana.
+    2. Los datos se eliminan al cerrar la pestaña o ventana del navegador.
+
+        `sessionStorage.setItem('pasoActual','2');`
+
+* LocalStorage:
+
+    1. Es persistente, guarda pares clave-valor.
+    2. Los datos almacenados permanecen después de cerrar el navegador.
+
+        `localStorage.setItem('tema','oscuro');`
+
+### Métodos de LocalStorage
+
+1. Guardar: `localStorage.setItem('usuario', 'pedro');`
+2. Obtener: `localstorage.getItem('usuario');`
+3. Eliminar: `localSorage.removeItem('usuario');`
+
+(lo mismo para Session Storage)
+
+
+#### Ejemplo Carrito (poco claro)
+
+```js
+
+document.getElementById("boton-agregar").addEventListener("click", function (){
+    let producto = { id: 1, nombre: "Prroducto 1", precio: 10 };
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.push(producto);
+    localStorage.setItem("carrito". JSON.stringify(carrito));
+    actualizarCArrito();
+});
+
+```
+
+
+***Antes de guardar en el storage, hay que asegurarse de pasar a JSON como strings.***
+
+
+
+```js
+
+/* Acá actualizo los datos en la UI*/
+
+function actualizarCarrito() {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let listaCarrito - document.getElementById('lista-carrito');
+    /* vacía la lista antes de llenarla nuevamente*/
+    listaCarrito. innerHTML = ''; 
+    for (let i = 0; i < carrito.length; i++) {
+        let producto = carrito[i];
+        let li = document.createElement('li');
+        li.textContent = producto.nombre + ' - $' + producto.precio;
+        listaCarrito.appendChild(li);
+    }
+}
+```
+
+## Implementación de carrito
+
+```js
+const KEY = "carrito"
+
+export const guardarCarrito = (carrito) => {
+    localStorage.setItem(KEY, JSON.stringify(carrito) )
+}
+export const obtenerCarrito = () => {
+    return JSON.parse(localStorage.getItem(KEY)) | | []
+}
+export const vaciarCarritoStorage = () => {
+    localStorage.removeItem(KEY)
+}
+´´´
+
+``js
+/* Funciones carrito*/
+ 

@@ -1,6 +1,8 @@
 /**
  * Archivo productos.js
- * Archivo de definición de la clase Productos
+ * Archivo de definición de la clase Productos.
+ * 
+ * 
  * 
  */
 const VALIDACION = {

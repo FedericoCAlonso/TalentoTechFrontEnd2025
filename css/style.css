@@ -114,7 +114,7 @@ p {
 
 .productos {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-auto-rows: 300px;
 
     /* Centrar horizontalmente cada grid item; no estirar verticalmente aquí
