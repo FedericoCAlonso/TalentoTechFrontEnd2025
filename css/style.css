@@ -43,7 +43,7 @@ body {
 }
 
 
-.header {
+.nav-bar {
     background-color: var(--color-fondo-resalte);
     color: var(--color-texto-resalte);
     display: grid;
