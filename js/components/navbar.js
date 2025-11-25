@@ -85,6 +85,7 @@ class NavBar extends HTMLElement {
         const parts = cleaned.split('/').filter(Boolean);
         // Si el último segmento parece un archivo (contiene un punto), no contamos ese segmento
         let depth = parts.length;
+        console.log(depth)
         const last = parts[parts.length - 1] || '';
         if (last.includes('.')) depth = parts.length - 1;
         if (depth <= 0) return './';
