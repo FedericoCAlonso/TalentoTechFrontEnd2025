@@ -1,18 +1,30 @@
 <!doctype html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Carrito - Vainilla Helados</title>
-    <!-- Esto para no tener problemas con los links en GitHub Pages -->
-    <!-- El dominio ya incluye el usuario; el base debe ser sólo el repo -->
-    <base href="/TalentoTechFrontEnd2025/">
-    <link rel="stylesheet" href="css/style.css">
-    <script type="module" src="js/components/navbar.js"></script>
-    <script type="module" src="js/carrito.js" defer></script>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="module" src="../js/components/navbar.js"></script>
+    <script type="module" src="../js/carrito.js" defer></script>
 </head>
+
 <body>
-    <nav-bar></nav-bar>
+    <nav class="nav-bar">
+        <img class="logo" src="../assets/images/logo.png" alt="Logo de tienda">
+        <h1>Vainilla Helados</h1>
+
+        <ul class="menu">
+            <li><a href="../index.html" data-page="Inicio">Inicio</a></li>
+            <li><a href="../index.html#venta" data-page="Productos">Productos</a></li>
+            <li><a href="../pages/contacto.html" data-page="Contacto">Contacto</a></li>
+            <li><a href="../pages/carrito.html" data-page="carrito"><span class="cart-count">0</span>🛒</a></li>
+        </ul>
+
+    </nav>
+
 
     <main class="main">
         <section class="seccion-contacto">
@@ -29,4 +41,5 @@
     </main>
 
 </body>
+
 </html>

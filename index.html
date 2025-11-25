@@ -5,10 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vainilla Helados Home</title>
-    <!-- Esto para no tener problemas con los links en GitHub Pages -->
-    <!-- En GitHub Pages la URL pública ya incluye el usuario, así que el base
-        debe apuntar sólo al nombre del repo. -->
-    <base href="/TalentoTechFrontEnd2025/">
+
     <link rel="stylesheet" href="./css/style.css">
     <!-- Cargo la definición del componente navbar-->
     <script type="module" src="js/components/navbar.js"></script>
@@ -17,25 +14,20 @@
 </head>
 
 <body>
-    <!-- Hice un componente navbar para no tener que repetir el código html en las distintas
-     páginas-->
-     <header>
-         <nav-bar></nav-bar>
-     </header>
-    <!--
-        <nav class="nav-bar">
-            <img class="logo" src="./assets/images/logo.png" alt="Logo de tienda">
-            <h1>Vainilla Helados</h1>
-            
-            <ul class="menu">
-                <li><a href="./index.html">Inicio</a></li>
-                <li><a href="#venta">Productos</a></li>
-                <li><a href="./pages/contacto.html">Contacto</a></li>
-                <li><a href=""></a></li>
-            </ul>
-            
-        </nav>
--->
+
+    <nav class="nav-bar">
+        <img class="logo" src="./assets/images/logo.png" alt="Logo de tienda">
+        <h1>Vainilla Helados</h1>
+
+        <ul class="menu">
+            <li><a href="./index.html" data-page="Inicio">Inicio</a></li>
+            <li><a href="#venta" data-page="Productos">Productos</a></li>
+            <li><a href="./pages/contacto.html" data-page="Contacto">Contacto</a></li>
+            <li><a href="./pages/carrito.html" data-page="carrito"><span class="cart-count">0</span>🛒</a></li>
+        </ul>
+
+    </nav>
+
     <main class="main">
         <section class="home">
             <h2>Nosotros</h2>
@@ -47,8 +39,8 @@
 
         </section>
         <section id="venta">
-        
-            
+
+
         </section>
 
     </main>
@@ -56,8 +48,8 @@
         <h3>Talento Tech</h3>
         <p>Federico C. Alonso federico80374@gmail.com</p>
     </footer>
-    
-    <script type="module" src="./js/index.js"></script>
+
+    <script type="module" src="js/index.js"></script>
 </body>
 
 </html>
