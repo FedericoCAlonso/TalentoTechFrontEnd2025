@@ -25,15 +25,16 @@ class NavBar extends HTMLElement {
      */
     connectedCallback() {
         this.render();
-        this.setActiveLink();
-        // Renderizar ya con los hrefs calculados para evitar un segundo pase sobre el DOM
+        // Establecer enlace activo una sola vez
         this.setActiveLink();
     }
 
     render() {
         
-        // Calcular prefijo relativo según la ruta actual y construir el HTML
-        const prefix = this._getRelativePrefix();
+        // Preferir la etiqueta <base> si existe (útil en GitHub Pages). Si no existe,
+        // calcular un prefijo relativo basado en la ruta actual.
+        const baseEl = document.querySelector('base');
+        const prefix = baseEl ? (baseEl.getAttribute('href') || '') : this._getRelativePrefix();
         this.innerHTML = `
     <nav class="nav-bar">
         <img class="logo" src="${prefix}assets/images/logo.png" alt="Logo de tienda">
@@ -85,7 +86,7 @@ class NavBar extends HTMLElement {
         const parts = cleaned.split('/').filter(Boolean);
         // Si el último segmento parece un archivo (contiene un punto), no contamos ese segmento
         let depth = parts.length;
-        console.log(depth)
+    // no imprimir en consola en producción
         const last = parts[parts.length - 1] || '';
         if (last.includes('.')) depth = parts.length - 1;
         if (depth <= 0) return './';
