@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Carrito - Vainilla Helados</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="module" src="../js/components/navbar.js"></script>
+    <script type="module" src="../js/carrito.js" defer></script>
+</head>
+<body>
+    <nav-bar></nav-bar>
+
+    <main class="main">
+        <section class="seccion-contacto">
+            <h2>Tu carrito</h2>
+            <div id="cart-container"></div>
+            <div class="cart-total-row">
+                <strong>Total: $<span id="cart-total">0</span></strong>
+            </div>
+            <div class="cart-actions">
+                <button id="cart-clear">Vaciar carrito</button>
+                <button id="cart-checkout" disabled>Finalizar compra (no implementado)</button>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

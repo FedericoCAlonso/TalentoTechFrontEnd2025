@@ -134,9 +134,11 @@ export class Inventario {
     static crearInventarioDesdeArray(claseDeProducto, datos) {
 
         const listado = new Inventario(claseDeProducto)
+        console.log("en invetario:");
+        console.log(datos);
 
         datos.forEach(productoJson => {
-            const producto = listado.#claseDeProducto.crearProductoDesdeJson(productoJson);
+            const producto = claseDeProducto.crearProductoDesdeJson(productoJson);
             listado.agregarProducto(producto);
 
         })

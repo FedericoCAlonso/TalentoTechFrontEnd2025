@@ -26,26 +26,31 @@ class NavBar extends HTMLElement {
     connectedCallback() {
         this.render();
         this.setActiveLink();
+        // Renderizar ya con los hrefs calculados para evitar un segundo pase sobre el DOM
+        this.setActiveLink();
     }
 
     render() {
+        
+        // Calcular prefijo relativo según la ruta actual y construir el HTML
+        const prefix = this._getRelativePrefix();
         this.innerHTML = `
     <nav class="nav-bar">
-        <img class="logo" src="./assets/images/logo.png" alt="Logo de tienda">
+        <img class="logo" src="${prefix}assets/images/logo.png" alt="Logo de tienda">
         <h1>Vainilla Helados</h1>
         
         <ul class="menu">
-            <li><a href="./index.html" data-page = "index">Inicio</a></li>
-            <li><a href="#venta" data-page = "venta">Productos</a></li>
-            <li><a href="./pages/contacto.html" data-page = "contacto">Contacto</a></li>
-            <li><a href="./pages/carrito.html" data-page = "carrito"><span class="cart-count">0</span>🛒</a></li>
+            <li><a href="${prefix}index.html" data-page="index">Inicio</a></li>
+            <li><a href="${prefix}index.html#venta" data-page="venta">Productos</a></li>
+            <li><a href="${prefix}pages/contacto.html" data-page="contacto">Contacto</a></li>
+            <li><a href="${prefix}pages/carrito.html" data-page="carrito"><span class="cart-count">0</span>🛒</a></li>
         </ul>
     </nav>
     `;
     }
 
     /**
-     * TODO: Hacer la clase "activa"
+     * TODO: Hacer la clase "activa" en el CSS
      */
 
     setActiveLink() {
@@ -61,10 +66,30 @@ class NavBar extends HTMLElement {
 
     }
     updateCartCount(count) {
-        const cartCount = this.querySelector('cart-count');
-        if(cartCount) {
+        const cartCount = this.querySelector('.cart-count');
+        if (cartCount) {
             cartCount.textContent = count;
         }
     }
+
+    /**
+     * Calcula un prefijo relativo ("../" repetido) según la profundidad
+     * de la ruta actual, de modo que los enlaces del navbar funcionen
+     * desde la raíz o desde subcarpetas como ./pages/
+     */
+    _getRelativePrefix() {
+        // pathname p. ej. '/pages/contacto.html' o '/index.html' o '/'
+        const pathname = window.location.pathname || '';
+        // Quitar query y hash (aunque pathname no los contiene normalmente)
+        const cleaned = pathname.split('?')[0].split('#')[0];
+        const parts = cleaned.split('/').filter(Boolean);
+        // Si el último segmento parece un archivo (contiene un punto), no contamos ese segmento
+        let depth = parts.length;
+        const last = parts[parts.length - 1] || '';
+        if (last.includes('.')) depth = parts.length - 1;
+        if (depth <= 0) return './';
+        return '../'.repeat(depth);
+    }
+
 }
 customElements.define('nav-bar', NavBar);

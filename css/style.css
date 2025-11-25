@@ -70,7 +70,7 @@ p {
     font-size: 1.5rem;
 }
 
-.menu ul {
+.menu {
     background-color: var(--color-fondo-secundario);
     color: var(--color-texto-secundario);
     display: flex;
@@ -199,6 +199,47 @@ p {
 
 }
 
+/*carrito.html */
+
+.cart-thumb {
+    height: 48px;
+    width: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+
+.qty-input {
+    width: 48px;
+    padding: 2px 4px;
+}
+
+.cart-total-row {
+    margin-top: 1rem;
+}
+
+.cart-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.cart-actions button {
+    background-color: var(--color-fondo-resalte);
+    color: var(--color-texto-resalte);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.cart-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+
 
 @media (max-width: 768px) {
 
@@ -258,6 +299,9 @@ p {
 
     .menu li:nth-child(3) a::before {
         content: "📞";
+    }
+    .menu li:nth-child(4) a::before {
+        content: "🛒";
     }
 
     .menu a::before {

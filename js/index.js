@@ -1,59 +1,115 @@
 import { Producto } from "./Producto.js";
 import { Inventario } from "./Inventario.js";
+import Carrito from "./cart.js";
+
+const urlProductos = "./js/datos.json";
 
 
-const arregloDeDatosJson = [
-    { nombre: "helado Vainilla", descripcion: "Helado sabor vainilla", urlFoto: "./assets/images/prueba.webp", precio: 1500, stock: 20, codigo: "001" },
-    { nombre: "helado Chocolate", descripcion: "Helado sabor chocolate", urlFoto: "./assets/images/prueba.webp", precio: 1700, stock: 15, codigo: "002" },
-    { nombre: "helado Frutilla", descripcion: "Helado sabor frutilla", urlFoto: "./assets/images/prueba.webp", precio: 1600, stock: 10, codigo: "003" },
-    { nombre: "helado Mango", descripcion: "Helado sabor mango", urlFoto: "./assets/images/prueba.webp", precio: 1800, stock: 5, codigo: "004" },
-    { nombre: "helado Limón", descripcion: "Helado sabor limón", urlFoto: "./assets/images/prueba.webp", precio: 1400, stock: 8, codigo: "005" },
-    { nombre: "helado Menta", descripcion: "Helado sabor menta", urlFoto: "./assets/images/prueba.webp", precio: 1550, stock: 12, codigo: "006" },
-    { nombre: "helado Café", descripcion: "Helado sabor café", urlFoto: "./assets/images/prueba.webp", precio: 1750, stock: 7, codigo: "007" },
-    { nombre: "helado granizado", descripcion: "Helado sabor crema americana con trozos de chocolate", urlFoto: "./assets/images/prueba.webp", precio: 1650, stock: 9, codigo: "008" },
-    { nombre: "helado Dulce de leche", descripcion: "Helado sabor dulce de leche", urlFoto: "./assets/images/prueba.webp", precio: 1850, stock: 11, codigo: "009" },
-    { nombre: "helado Pistacho", descripcion: "Helado sabor pistacho", urlFoto: "./assets/images/prueba.webp", precio: 1900, stock: 6, codigo: "010" }
-];
+let carrito = null; // se inicializa cuando carguemos los datos
 
-const inventarioDeProductos = Inventario.crearInventarioDesdeArray(Producto, arregloDeDatosJson);
-
-/** Nos aseguramos que el html esté cargado antes de comenzar
- * para evitar errores de referencias que puedan no estar 
- * creadas al momento de llamarlas.
- */
-document.addEventListener('DOMContentLoaded', ()=>{
-
+function renderizarInterfaz(inventario) {
     const ofertaProductos = document.getElementById("venta");
+    
+    // Limpiamos por si acaso se llama dos veces
+    ofertaProductos.innerHTML = ""; 
+
     const tituloOferta = document.createElement("h2");
-    tituloOferta.textContent = "Nuestros Helados"
+    tituloOferta.textContent = "Nuestros Helados";
     ofertaProductos.appendChild(tituloOferta);
     
-    let contenedorProductos = document.createElement("div");
+    const contenedorProductos = document.createElement("div");
     contenedorProductos.classList.add("productos");
     
-    inventarioDeProductos.listarProductos().forEach(producto => {
+    inventario.listarProductos().forEach(producto => {
         const tarjeta = document.createElement("div");
         tarjeta.classList.add("productos--tarjeta");
-    
-        const foto = document.createElement("img");
-        foto.src = producto.urlFoto;
-        foto.alt = producto.nombre;
-    
-        const nombre = document.createElement("h3");
-        nombre.textContent = producto.nombre;
-    
-        const descripcion = document.createElement("p");
-        descripcion.textContent = producto.descripcion;
-    
-        const precio = document.createElement("p");
-        precio.textContent = `Precio: $${producto.precio}`;
-    
-        tarjeta.appendChild(foto);
-        tarjeta.appendChild(nombre);
-        tarjeta.appendChild(descripcion);
-        tarjeta.appendChild(precio);
+        // Añadimos botón "Agregar al carrito" y atributo data-codigo para identificar el producto
+        tarjeta.innerHTML = `
+            <img src="${producto.urlFoto}" alt="${producto.nombre}">
+            <h3>${producto.nombre}</h3>
+            <p>${producto.descripcion}</p>
+            <p>Precio: $${producto.precio}</p>
+            <button class="btn-add" data-codigo="${producto.codigo}">Agregar al carrito</button>
+        `;
+        
         contenedorProductos.appendChild(tarjeta);
     });
     
     ofertaProductos.appendChild(contenedorProductos);
-})
+
+    // Delegación de eventos para los botones Agregar al carrito
+    contenedorProductos.addEventListener('click', (e) => {
+        const btn = e.target.closest('.btn-add');
+        if (!btn) return;
+        const codigo = btn.dataset.codigo;
+        const producto = inventario.listarProductos().find(p => p.codigo === codigo);
+        if (!producto) return;
+        carrito.agregarProducto(producto, 1);
+        // actualizar contador en la barra de navegación
+        const nav = document.querySelector('nav-bar');
+        if (nav && typeof nav.updateCartCount === 'function') {
+            nav.updateCartCount(carrito.cantidadTotal());
+        }
+    });
+}
+
+// No me siento cómodo usando fetch().then()
+// por eso hice la función asíncrona
+async function iniciarApp() {
+    try {
+        //Pedimos los datos y ESPERAMOS (await)
+        const respuesta = await fetch(urlProductos);
+        
+        //Verificamos que la petición fue exitosa (status 200-299)
+        if (!respuesta.ok) {
+            throw new Error("No se pudo cargar el archivo JSON");
+        }
+
+        //Convertimos a JSON y ESPERAMOS (await)
+        //
+        const data = await respuesta.json();
+        // Tuve un error con la interpretación del arcivo de datos
+        // Yo interpreté que devolvía un array de objetos, y resulta
+        // que devolvía un objeto con un array de objetos...
+        // Entonces
+        // Soportar dos formatos comunes del archivo JSON:
+        // 1) un array en la raíz: [ { ... }, { ... } ]
+        // 2) un objeto con la propiedad "arregloDeDatosJson": { "arregloDeDatosJson": [ ... ] }
+        const arregloDeDatosJson = Array.isArray(data)
+            ? data
+            // data?.arregloDeDatosJson uso el operador ?. de encadenamiento condicional
+            // por si el dato no tiene ese objeto, de modo que no se rompa la ejecución.
+            : (Array.isArray(data?.arregloDeDatosJson) ? data.arregloDeDatosJson : []);
+        if (!Array.isArray(arregloDeDatosJson)) {
+            throw new Error('Formato de JSON inesperado: se esperaba un array de productos');
+        }
+        console.log(arregloDeDatosJson);
+
+        // Generamos el inventario, ahora si, con el arreglo de datos
+        const inventarioDeProductos = Inventario.crearInventarioDesdeArray(
+            Producto, 
+            arregloDeDatosJson
+        );
+
+        // Inicializar carrito (persistente)
+        carrito = new Carrito(Producto);
+
+        // actualizar contador en la navbar si existe
+        const navInit = document.querySelector('nav-bar');
+        if (navInit && typeof navInit.updateCartCount === 'function') {
+            navInit.updateCartCount(carrito.cantidadTotal());
+        }
+
+        // renderizamos
+        renderizarInterfaz(inventarioDeProductos);
+
+    } catch (error) {
+        console.error("Error grave iniciando la app:", error);
+       
+    }
+}
+
+// 3. Evento de carga
+document.addEventListener('DOMContentLoaded', () => {
+    iniciarApp();
+});
