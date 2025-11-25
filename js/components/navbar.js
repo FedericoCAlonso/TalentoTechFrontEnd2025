@@ -55,13 +55,26 @@ class NavBar extends HTMLElement {
      */
 
     setActiveLink() {
-        const paginaActual = window.location.pathname.split('/').pop() || 'index.html';
-        const enlaces = this.querySelectorAll('a');
+        // Determinar página actual teniendo en cuenta un posible <base href="..."> usado en GitHub Pages.
+        const baseEl = document.querySelector('base');
+        const baseHref = baseEl ? (baseEl.getAttribute('href') || '') : '';
+        // Obtener el pathname relativo a la base
+        let relativePath = window.location.pathname || '';
+        if (baseHref && relativePath.startsWith(baseHref)) {
+            relativePath = relativePath.slice(baseHref.length);
+        }
+        // Normalizar: eliminar query/hash
+        relativePath = relativePath.split('?')[0].split('#')[0];
+        const parts = relativePath.split('/').filter(Boolean);
+        // Si no hay segmento, estamos en la raíz -> index.html
+        const paginaActual = parts.length === 0 ? 'index.html' : parts.pop();
 
+        const enlaces = this.querySelectorAll('a');
         enlaces.forEach(enlace => {
-            const pagina = enlace.getAttribute("data-page");
-            if (paginaActual.includes(pagina)) {
-                enlace.classList.add("activa");
+            const pagina = enlace.getAttribute('data-page');
+            // Marcar activo si la página actual incluye la etiqueta data-page
+            if (paginaActual && pagina && paginaActual.includes(pagina)) {
+                enlace.classList.add('activa');
             }
         });
 
