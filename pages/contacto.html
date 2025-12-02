@@ -53,6 +53,14 @@
     <h3>Talento Tech</h3>
     <p>Federico C. Alonso federico80374@gmail.com</p>
   </footer>
+  <script type="module">
+    import { cargarCarrito } from "../js/storage.js";
+    import { actualizarContadorCarrito } from "../js/utils.js";
+
+    // Actualizar el contador del carrito al cargar la página
+    const carrito = cargarCarrito();
+    actualizarContadorCarrito(carrito);
+  </script>
 </body>
 
 </html>
